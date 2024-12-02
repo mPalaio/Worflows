@@ -1,0 +1,35 @@
+name: On Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Vérifie le code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Exemple d'une commande
+      - name: Echo Message
+        run: echo "Un push a été détecté sur la branche main !"
+
+      # Étape 3 : Installation et test
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+
+
+
